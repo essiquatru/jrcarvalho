@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JR Carvalho - Lavagem Automotiva</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cal+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <style>
+        .cal-sans { font-family: 'Cal Sans', sans-serif; }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-sm z-50 shadow-sm">
+        <nav class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <img src="/JRCarvalho.jpg" alt="JR Carvalho Logo" class="h-12 w-auto">
+            <div class="md:flex gap-6 hidden">
+                <a href="#servicos" class="text-gray-700 hover:text-black transition-colors">Serviços</a>
+                <a href="#precos" class="text-gray-700 hover:text-black transition-colors">Preços</a>
+                <a href="#contato" class="text-gray-700 hover:text-black transition-colors">Contato</a>
+            </div>
+            <a
+                href="https://wa.me/555497122343?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20lavagem%20para%20meu%20carro."
+                target="_blank"
+                rel="noopener noreferrer"
+                class="bg-black text-white px-6 py-2 rounded-full hover:bg-gray-800 transition-colors"
+            >
+                Agendar
+            </a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="pt-24 pb-16 px-4">
+        <div class="container mx-auto mt-16">
+            <h1 class="cal-sans text-5xl md:text-6xl text-center mb-6">
+                Transforme seu carro com um<br>toque
+            </h1>
+            <p class="text-gray-600 text-center max-w-2xl mx-auto mb-8">
+                Lavagem de qualidade comm produtos de alta qualidade.
+            </p>
+            <div class="flex justify-center gap-4">
+                <a
+                    href="https://wa.me/555497122343?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20lavagem%20para%20meu%20carro."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="bg-black text-white px-8 py-3 rounded-full hover:bg-gray-800 transition-colors"
+                >
+                    Agendar Agora
+                </a>
+                <a href="#servicos" class="border border-black px-8 py-3 rounded-full hover:bg-gray-50 transition-colors flex items-center justify-center">
+                    Ver Serviços
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section id="servicos" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="cal-sans text-3xl md:text-4xl text-center mb-12">Nossos Serviços</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-2xl shadow-sm">
+                    <span class="material-symbols-outlined text-4xl mb-4">local_car_wash</span>
+                    <h3 class="text-xl font-semibold mb-2">Lavagem Completa</h3>
+                    <p class="text-gray-600">Limpeza interna e externa.</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm">
+                    <span class="material-symbols-outlined text-4xl mb-4">auto_awesome</span>
+                    <h3 class="text-xl font-semibold mb-2">Cuidado</h3>
+                    <p class="text-gray-600">Limpeza feita com cuidado.</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm">
+                    <span class="material-symbols-outlined text-4xl mb-4">chair</span>
+                    <h3 class="text-xl font-semibold mb-2">Higienização</h3>
+                    <p class="text-gray-600">Limpeza profunda de estofados e interior do veículo.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="precos" class="py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="cal-sans text-3xl md:text-4xl text-center mb-12">Pacotes e Preços</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="border p-6 rounded-2xl hover:shadow-lg transition-shadow">
+                    <h3 class="text-xl font-semibold mb-2">Lavagem Completa</h3>
+                    <p class="text-3xl font-bold mb-4">R$ 50</p>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center">
+                            <span class="material-symbols-outlined mr-2 text-green-500">check</span>
+                            Lavagem externa
+                        </li>
+                        <li class="flex items-center">
+                            <span class="material-symbols-outlined mr-2 text-green-500">check</span>
+                            Aspiração interna
+                        </li>
+                    </ul>
+                    <a
+                        href="https://wa.me/555497122343?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20o%20plano%20Lavagem%20Completa%20(R%24%2050)."
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="block text-center border border-black px-6 py-2 rounded-full hover:bg-black hover:text-white transition-colors"
+                    >
+                        Selecionar
+                    </a>
+                </div>
+                <div class="border p-6 rounded-2xl hover:shadow-lg transition-shadow bg-black text-white">
+                    <h3 class="text-xl font-semibold mb-2">Lavagem Completa + Cera</h3>
+                    <p class="text-3xl font-bold mb-4">R$ 60</p>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center">
+                            <span class="material-symbols-outlined mr-2 text-green-500">check</span>
+                            Lavagem externa
+                        </li>
+                        <li class="flex items-center">
+                            <span class="material-symbols-outlined mr-2 text-green-500">check</span>
+                            Aspiração interna
+                        </li>
+                        <li class="flex items-center">
+                            <span class="material-symbols-outlined mr-2 text-green-500">check</span>
+                            Cera extra protetora
+                        </li>
+                    </ul>
+                    <a
+                        href="https://wa.me/555497122343?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20o%20plano%20Lavagem%20Completa%20%2B%20Cera%20extra%20(R%24%2060)."
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="block text-center bg-white text-black px-6 py-2 rounded-full hover:bg-gray-100 transition-colors"
+                    >
+                        Selecionar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contato" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="cal-sans text-3xl md:text-4xl text-center mb-12">Entre em Contato</h2>
+            <div class="max-w-xl mx-auto">
+                <div class="bg-white p-8 rounded-2xl shadow-sm">
+                    <form id="whatsappContactForm" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-1" for="nome">Nome</label>
+                            <input
+                                id="nome"
+                                name="nome"
+                                type="text"
+                                required
+                                class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                            >
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1" for="plano">Plano</label>
+                            <select
+                                id="plano"
+                                name="plano"
+                                required
+                                class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black bg-white"
+                            >
+                                <option value="" disabled selected>Selecione um plano</option>
+                                <option value="Lavagem Completa (R$ 50)">Lavagem Completa (R$ 50)</option>
+                                <option value="Lavagem Completa + Cera extra (R$ 60)">Lavagem Completa + Cera extra (R$ 60)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1" for="mensagem">Mensagem</label>
+                            <textarea
+                                id="mensagem"
+                                name="mensagem"
+                                rows="4"
+                                required
+                                class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                            ></textarea>
+                        </div>
+                        <button
+                            type="submit"
+                            class="block text-center w-full bg-black text-white px-6 py-3 rounded-full hover:bg-gray-800 transition-colors"
+                        >
+                            Enviar pelo WhatsApp
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <img src="/JRCarvalho.jpg" alt="JR Carvalho Logo" class="h-12 w-auto mb-6 md:mb-0">
+                <div class="text-center md:text-right">
+                    <p class="mb-2">contato@jrcarvalho.com</p>
+                    <p>(11) 99999-9999</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2025 JR Carvalho. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('whatsappContactForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const nome = document.getElementById('nome').value.trim();
+            const plano = document.getElementById('plano').value;
+            const mensagem = document.getElementById('mensagem').value.trim();
+
+            const texto = `Olá, meu nome é ${nome}.%0APlano selecionado: ${plano}.%0A%0AMensagem:%0A${mensagem}`;
+            const url = `https://wa.me/555497122343?text=${encodeURIComponent(decodeURIComponent(texto))}`;
+
+            window.open(url, '_blank');
+        });
+    </script>
+</body>
+</html>
