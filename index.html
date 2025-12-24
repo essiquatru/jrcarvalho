@@ -1,223 +1,388 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JR Carvalho - Lavagem Automotiva</title>
+    <title>JR Carvalho - Estética Automotiva</title>
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cal+Sans&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            red: '#DC2626',
+                            dark: '#050505',
+                            card: '#0F0F0F',
+                            border: '#1F1F1F'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
     <style>
-        .cal-sans { font-family: 'Cal Sans', sans-serif; }
+        .header-glass {
+            background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: #DC2626;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .pricing-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .pricing-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(220, 38, 38, 0.5);
+            box-shadow: 0 20px 40px -15px rgba(220, 38, 38, 0.2);
+        }
+
+        .map-container {
+            filter: grayscale(100%) invert(90%) contrast(90%);
+            transition: all 0.6s ease;
+        }
+        .map-container:hover {
+            filter: grayscale(0%) invert(0%) contrast(100%);
+        }
+
+        .logo-placeholder {
+            min-width: 50px;
+            min-height: 50px;
+            background: #1a1a1a;
+            border: 1px dashed #444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 10px;
+            text-align: center;
+            padding: 5px;
+        }
     </style>
 </head>
-<body class="bg-white">
-    <!-- Header -->
-    <header class="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-sm z-50 shadow-sm">
-        <nav class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <img src="JRCarvalho.jpg" alt="JR Carvalho Logo" class="h-12 w-auto">
-            <div class="md:flex gap-6 hidden">
-                <a href="#servicos" class="text-gray-700 hover:text-black transition-colors">Serviços</a>
-                <a href="#precos" class="text-gray-700 hover:text-black transition-colors">Preços</a>
-                <a href="#contato" class="text-gray-700 hover:text-black transition-colors">Contato</a>
+<body class="bg-brand-dark text-white font-sans antialiased selection:bg-brand-red selection:text-white">
+
+    <!-- CABEÇALHO (HEADER) -->
+    <header class="fixed w-full z-50 header-glass">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-24">
+                
+                <!-- ÁREA DA LOGO -->
+                <div class="flex items-center gap-4">
+                    <a href="#inicio" class="flex items-center gap-3 group">
+                        <div class="relative overflow-hidden rounded-xl border border-white/10 bg-white/5">
+                            <img src="jr_carvalho_hq.png" 
+                                 alt="Logo JR Carvalho" 
+                                 class="h-14 w-14 object-contain" 
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="logo-placeholder hidden">
+                                <i class="fas fa-image mb-1"></i><br>JRCARVALHO ERROR IMG
+                            </div>
+                        </div>
+                        
+                        <div class="flex flex-col">
+                            <span class="text-2xl font-black tracking-tighter leading-none group-hover:text-brand-red transition-colors uppercase">JR CARVALHO</span>
+                            <span class="text-[10px] font-bold text-brand-red tracking-[0.4em] uppercase">Lavagem Automotiva</span>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- MENU DESKTOP -->
+                <nav class="hidden md:flex items-center space-x-10">
+                    <a href="#inicio" class="nav-link text-sm font-semibold text-gray-300 hover:text-white uppercase tracking-widest">Início</a>
+                    <a href="#precos" class="nav-link text-sm font-semibold text-gray-300 hover:text-white uppercase tracking-widest">Serviços</a>
+                    <a href="#localizacao" class="nav-link text-sm font-semibold text-gray-300 hover:text-white uppercase tracking-widest">Onde Estamos</a>
+                    
+                    <a href="https://wa.me/5554997122343" target="_blank" class="bg-brand-red hover:bg-red-700 text-white px-6 py-3 rounded-full text-xs font-black uppercase tracking-tighter transition-all transform hover:scale-105 shadow-lg shadow-red-900/20">
+                        Agendar Agora
+                    </a>
+                </nav>
+
+                <!-- BOTÃO MOBILE -->
+                <div class="md:hidden">
+                    <button type="button" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="p-2 text-gray-400 hover:text-white">
+                        <i class="fas fa-th-large text-2xl"></i>
+                    </button>
+                </div>
             </div>
-            <a
-                href="https://wa.me/555497122343?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20lavagem%20para%20meu%20carro."
-                target="_blank"
-                rel="noopener noreferrer"
-                class="bg-black text-white px-6 py-2 rounded-full hover:bg-gray-800 transition-colors"
-            >
-                Agendar
-            </a>
-        </nav>
+        </div>
+
+        <!-- MENU MOBILE -->
+        <div class="hidden md:hidden bg-brand-dark/98 border-t border-white/5" id="mobile-menu">
+            <div class="px-6 py-8 space-y-4">
+                <a href="#inicio" class="block text-xl font-bold hover:text-brand-red transition-colors">Início</a>
+                <a href="#precos" class="block text-xl font-bold hover:text-brand-red transition-colors">Preços</a>
+                <a href="#localizacao" class="block text-xl font-bold hover:text-brand-red transition-colors">Localização</a>
+                <hr class="border-white/5">
+                <div class="flex flex-col gap-2">
+                    <span class="text-[10px] text-gray-500 uppercase tracking-widest">Farroupilha, RS</span>
+                    <a href="https://wa.me/5554997122343" class="w-full text-center py-4 bg-brand-red rounded-xl font-bold">Falar no WhatsApp</a>
+                </div>
+            </div>
+        </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="pt-24 pb-16 px-4">
-        <div class="container mx-auto mt-16">
-            <h1 class="cal-sans text-5xl md:text-6xl text-center mb-6">
-                Transforme seu carro com um<br>toque
-            </h1>
-            <p class="text-gray-600 text-center max-w-2xl mx-auto mb-8">
-                Lavagem de qualidade comm produtos de alta qualidade.
-            </p>
-            <div class="flex justify-center gap-4">
-                <a
-                    href="https://wa.me/555497122343?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20lavagem%20para%20meu%20carro."
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="bg-black text-white px-8 py-3 rounded-full hover:bg-gray-800 transition-colors"
-                >
-                    Agendar Agora
-                </a>
-                <a href="#servicos" class="border border-black px-8 py-3 rounded-full hover:bg-gray-50 transition-colors flex items-center justify-center">
-                    Ver Serviços
-                </a>
-            </div>
+    <!-- HERO SECTION -->
+    <section id="inicio" class="relative min-h-screen flex items-center pt-24 overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?q=80&w=1931&auto=format&fit=crop" class="w-full h-full object-cover opacity-20 scale-105" alt="Estética Automotiva">
+            <div class="absolute inset-0 bg-gradient-to-b from-brand-dark via-transparent to-brand-dark"></div>
         </div>
-    </section>
 
-    <!-- Services -->
-    <section id="servicos" class="py-16 bg-gray-50">
-        <div class="container mx-auto px-4">
-            <h2 class="cal-sans text-3xl md:text-4xl text-center mb-12">Nossos Serviços</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-white p-6 rounded-2xl shadow-sm">
-                    <span class="material-symbols-outlined text-4xl mb-4">local_car_wash</span>
-                    <h3 class="text-xl font-semibold mb-2">Lavagem Completa</h3>
-                    <p class="text-gray-600">Limpeza interna e externa.</p>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="max-w-3xl">
+                <div class="inline-flex items-center gap-2 bg-brand-red/10 border border-brand-red/20 px-4 py-1.5 rounded-full mb-8">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-red opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-red"></span>
+                    </span>
+                    <span class="text-[10px] font-bold text-brand-red uppercase tracking-widest">Boas vindas</span>
                 </div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm">
-                    <span class="material-symbols-outlined text-4xl mb-4">auto_awesome</span>
-                    <h3 class="text-xl font-semibold mb-2">Cuidado</h3>
-                    <p class="text-gray-600">Limpeza feita com cuidado.</p>
-                </div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm">
-                    <span class="material-symbols-outlined text-4xl mb-4">chair</span>
-                    <h3 class="text-xl font-semibold mb-2">Higienização</h3>
-                    <p class="text-gray-600">Limpeza profunda de estofados e interior do veículo.</p>
+                
+                <h1 class="text-6xl lg:text-8xl font-black tracking-tighter mb-8 leading-[0.9]">
+                    LIMPEZA <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-white/80 to-gray-500 text-uppercase">SEM IGUAL.</span>
+                </h1>
+                
+                <p class="text-xl text-gray-400 font-medium mb-10 max-w-xl leading-relaxed">
+                    Mais que uma lavagem, uma renovação completa. Utilizamos os melhores produtos para garantir proteção e brilho intenso.
+                </p>
+                
+                <div class="flex flex-wrap gap-4">
+                    <a href="https://wa.me/5554997122343" class="px-10 py-5 bg-white text-black font-black uppercase text-xs rounded-2xl hover:bg-brand-red hover:text-white transition-all">Ver Tabela de Preços</a>
+                    <div class="flex -space-x-3 items-center">
+                        <div class="w-10 h-10 rounded-full border-2 border-brand-dark bg-gray-800 flex items-center justify-center text-[10px]">⭐</div>
+                        <div class="w-10 h-10 rounded-full border-2 border-brand-dark bg-gray-800 flex items-center justify-center text-[10px]">⭐</div>
+                        <div class="w-10 h-10 rounded-full border-2 border-brand-dark bg-gray-800 flex items-center justify-center text-[10px]">⭐</div>
+                        <span class="pl-6 text-[11px] font-bold text-gray-500 uppercase tracking-widest">+100 Clientes Satisfeitos</span>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Pricing -->
-    <section id="precos" class="py-16">
-        <div class="container mx-auto px-4">
-            <h2 class="cal-sans text-3xl md:text-4xl text-center mb-12">Pacotes e Preços</h2>
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="border p-6 rounded-2xl hover:shadow-lg transition-shadow">
-                    <h3 class="text-xl font-semibold mb-2">Lavagem Completa</h3>
-                    <p class="text-3xl font-bold mb-4">R$ 50</p>
-                    <ul class="space-y-2 mb-6">
-                        <li class="flex items-center">
-                            <span class="material-symbols-outlined mr-2 text-green-500">check</span>
-                            Lavagem externa
-                        </li>
-                        <li class="flex items-center">
-                            <span class="material-symbols-outlined mr-2 text-green-500">check</span>
-                            Aspiração interna
-                        </li>
-                    </ul>
-                    <a
-                        href="https://wa.me/555497122343?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20o%20plano%20Lavagem%20Completa%20(R%24%2050)."
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="block text-center border border-black px-6 py-2 rounded-full hover:bg-black hover:text-white transition-colors"
-                    >
-                        Selecionar
+    <!-- TABELA DE PREÇOS -->
+    <section id="precos" class="py-32 bg-brand-dark">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="mb-20">
+                <h2 class="text-brand-red font-bold uppercase tracking-widest text-xs mb-4">Escolha seu plano</h2>
+                <h3 class="text-5xl font-black tracking-tight uppercase">Investimento por <span class="text-gray-600">Categoria.</span></h3>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- PASSEIO -->
+                <div class="pricing-card bg-brand-card p-10 rounded-[40px] border border-white/5 flex flex-col group">
+                    <div class="mb-10 text-brand-red group-hover:scale-110 transition-transform origin-left">
+                        <i class="fas fa-car-side text-4xl"></i>
+                    </div>
+                    <h4 class="text-2xl font-black mb-1 uppercase">Passeio</h4>
+                    <p class="text-gray-500 text-[10px] uppercase font-bold tracking-widest mb-10">Compactos e Sedans</p>
+                    <div class="space-y-6 flex-grow">
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-400 text-sm">Completa</span>
+                            <span class="text-2xl font-black">R$ 50</span>
+                        </div>
+                        <div class="flex justify-between items-center opacity-60">
+                            <span class="text-gray-400 text-sm">Ducha</span>
+                            <span class="text-xl font-bold">R$ 30</span>
+                        </div>
+                    </div>
+                    <a href="https://wa.me/5554997122343" class="mt-12 block text-center py-4 border border-white/10 rounded-2xl text-xs font-bold hover:bg-white hover:text-black transition-all uppercase tracking-tighter">Reservar</a>
+                </div>
+
+                <!-- SUV -->
+                <div class="pricing-card bg-white p-10 rounded-[40px] flex flex-col transform lg:-translate-y-6">
+                    <div class="mb-10 text-brand-red">
+                        <i class="fas fa-truck-pickup text-4xl"></i>
+                    </div>
+                    <h4 class="text-2xl font-black text-black mb-1 uppercase">SUV</h4>
+                    <p class="text-gray-400 text-[10px] uppercase font-bold tracking-widest mb-10">Utilitários</p>
+                    <div class="space-y-6 flex-grow">
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600 text-sm font-bold uppercase">Completa</span>
+                            <span class="text-3xl font-black text-black">R$ 60</span>
+                        </div>
+                    </div>
+                    <a href="https://wa.me/5554997122343" class="mt-12 block text-center py-5 bg-brand-red text-white rounded-2xl text-xs font-black uppercase shadow-xl shadow-red-900/20 tracking-tighter">Agendar SUV</a>
+                </div>
+
+                <!-- CAMIONETE -->
+                <div class="pricing-card bg-brand-card p-10 rounded-[40px] border border-white/5 flex flex-col">
+                    <div class="mb-10 text-brand-red">
+                        <i class="fas fa-truck text-4xl"></i>
+                    </div>
+                    <h4 class="text-2xl font-black mb-1 uppercase">Camionete</h4>
+                    <p class="text-gray-500 text-[10px] uppercase font-bold tracking-widest mb-10">Grandes Veículos</p>
+                    <div class="space-y-6 flex-grow">
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-400 text-sm font-bold uppercase">Completa</span>
+                            <span class="text-2xl font-black">R$ 80</span>
+                        </div>
+                    </div>
+                    <a href="https://wa.me/5554997122343" class="mt-12 block text-center py-4 border border-white/10 rounded-2xl text-xs font-bold hover:bg-white hover:text-black transition-all uppercase tracking-tighter">Reservar</a>
+                </div>
+
+                <!-- VANS -->
+                <div class="pricing-card bg-brand-card p-10 rounded-[40px] border border-white/5 flex flex-col">
+                    <div class="mb-10 text-brand-red">
+                        <i class="fas fa-bus text-4xl"></i>
+                    </div>
+                    <h4 class="text-2xl font-black mb-1 uppercase">Vans</h4>
+                    <p class="text-gray-500 text-[10px] uppercase font-bold tracking-widest mb-10">Frota Comercial</p>
+                    <div class="space-y-6 flex-grow">
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-400 text-sm font-bold uppercase">Completa</span>
+                            <span class="text-2xl font-black">R$ 150</span>
+                        </div>
+                    </div>
+                    <a href="https://wa.me/5554997122343" class="mt-12 block text-center py-4 border border-white/10 rounded-2xl text-xs font-bold hover:bg-white hover:text-black transition-all uppercase tracking-tighter">Reservar</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO UBER (REINSERIDA) -->
+    <section class="max-w-7xl mx-auto px-4 mb-20">
+        <div class="relative rounded-[40px] overflow-hidden bg-black border border-white/5">
+            <div class="grid grid-cols-1 md:grid-cols-2 items-center">
+                <div class="p-10 md:p-20">
+                    <div class="flex items-center gap-3 mb-8">
+                        <div class="bg-white text-black p-2 rounded-lg"><i class="fab fa-uber text-2xl"></i></div>
+                        <span class="text-white font-bold text-[10px] uppercase tracking-[0.3em]">Parceiros de Farroupilha</span>
+                    </div>
+                    <h3 class="text-5xl font-black text-white mb-6 uppercase tracking-tighter">Tarifa <span class="text-brand-red">Uber.</span></h3>
+                    <p class="text-gray-400 mb-10 max-w-sm text-lg leading-relaxed">Mantenha sua ferramenta de trabalho impecável com o melhor custo-benefício para motoristas parceiros.</p>
+                    <div class="flex items-center gap-8 mb-10">
+                        <div class="text-5xl font-black text-white">R$ 30 <small class="text-[10px] text-gray-500 uppercase block tracking-widest mt-2">Ducha Exclusiva</small></div>
+                    </div>
+                    <a href="https://wa.me/5554997122343?text=Sou%20motorista%20Uber" target="_blank" class="inline-block px-10 py-5 bg-brand-red text-white font-black uppercase text-xs rounded-2xl hover:bg-red-700 transition-all shadow-xl shadow-red-900/30">Resgatar Promoção</a>
+                </div>
+                <div class="hidden md:block h-full min-h-[500px] bg-[url('https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-40"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LOCALIZAÇÃO -->
+    <section id="localizacao" class="py-32 bg-brand-dark">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+                <div class="lg:col-span-5">
+                    <h2 class="text-brand-red font-bold uppercase tracking-widest text-xs mb-4">Onde Estamos</h2>
+                    <h3 class="text-5xl font-black mb-8 uppercase tracking-tighter">Bairro Salgado Filho, <span class="text-gray-600 text-uppercase">Farroupilha.</span></h3>
+                    
+                    <div class="p-8 bg-brand-card rounded-3xl border border-white/5 space-y-8">
+                        <div class="flex gap-6">
+                            <div class="bg-brand-red/10 h-14 w-14 rounded-2xl flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-location-arrow text-brand-red text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-gray-500 text-[10px] font-bold uppercase tracking-[0.2em] mb-1">Endereço</p>
+                                <p class="text-lg font-bold">Rua Vitório Madalosso, 140</p>
+                                <p class="text-gray-400 text-sm">Farroupilha - RS, 95171-334</p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-6">
+                            <div class="bg-brand-red/10 h-14 w-14 rounded-2xl flex items-center justify-center flex-shrink-0">
+                                <i class="far fa-clock text-brand-red text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-gray-500 text-[10px] font-bold uppercase tracking-[0.2em] mb-1">Horário de Atendimento</p>
+                                <p class="text-lg font-bold uppercase">Seg a Sex: 07h – 19h</p>
+                                <p class="text-gray-400 text-sm">Sábados: 07h – 16h</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- LINK EXATO FORNECIDO -->
+                    <a href="https://www.google.com/maps/place/29%C2%B011'19.1%22S+51%C2%B011'18.6%22W/@-29.1886698,-51.1886406,21z/data=!4m4!3m3!8m2!3d-29.1886389!4d-51.1885?hl=pt-BR&entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoKLDEwMDc5MjA3MUgBUAM%3D" target="_blank" class="mt-8 inline-flex items-center gap-3 text-brand-red font-black text-xs uppercase tracking-widest hover:gap-5 transition-all">
+                        Traçar Rota no Waze ou Maps <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
-                <div class="border p-6 rounded-2xl hover:shadow-lg transition-shadow bg-black text-white">
-                    <h3 class="text-xl font-semibold mb-2">Lavagem Completa + Cera</h3>
-                    <p class="text-3xl font-bold mb-4">R$ 60</p>
-                    <ul class="space-y-2 mb-6">
-                        <li class="flex items-center">
-                            <span class="material-symbols-outlined mr-2 text-green-500">check</span>
-                            Lavagem externa
-                        </li>
-                        <li class="flex items-center">
-                            <span class="material-symbols-outlined mr-2 text-green-500">check</span>
-                            Aspiração interna
-                        </li>
-                        <li class="flex items-center">
-                            <span class="material-symbols-outlined mr-2 text-green-500">check</span>
-                            Cera extra protetora
-                        </li>
-                    </ul>
-                    <a
-                        href="https://wa.me/555497122343?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20o%20plano%20Lavagem%20Completa%20%2B%20Cera%20extra%20(R%24%2060)."
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="block text-center bg-white text-black px-6 py-2 rounded-full hover:bg-gray-100 transition-colors"
-                    >
-                        Selecionar
+
+                <div class="lg:col-span-7 h-[600px] relative">
+                    <div class="absolute inset-0 rounded-[50px] overflow-hidden border border-white/10 shadow-2xl">
+                        <!-- EMBED EXATO PARA AS COORDENADAS -->
+                        <iframe 
+                            class="map-container w-full h-full"
+                            src="https://www.google.com/maps/embed?pb=!1m13!1m8!1m3!1d217.69908383572204!2d-51.1886406!3d-29.1886698!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjnCsDExJzE5LjEiUyA1McKwMTEnMTguNiJX!5e0!3m2!1spt-BR!2sbr!4v1766613922915!5m2!1spt-BR!2sbr" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-black pt-24 pb-12 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-12 text-uppercase">
+                <div>
+                    <span class="text-4xl font-black tracking-tighter block mb-4 uppercase">JR CARVALHO</span>
+                    <p class="text-gray-600 max-w-sm text-sm">
+                        Especialistas em estética automotiva. Transformamos a aparência do seu veículo com técnicas avançadas e cuidado profissional.
+                    </p>
+                </div>
+                <div class="flex gap-4">
+                    <a href="https://wa.me/5554997122343" target="_blank" class="h-12 w-12 bg-white/5 rounded-full flex items-center justify-center hover:bg-brand-red transition-colors text-white">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a href="#" class="h-12 w-12 bg-white/5 rounded-full flex items-center justify-center hover:bg-brand-red transition-colors text-white">
+                        <i class="fab fa-instagram"></i>
                     </a>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Contact -->
-    <section id="contato" class="py-16 bg-gray-50">
-        <div class="container mx-auto px-4">
-            <h2 class="cal-sans text-3xl md:text-4xl text-center mb-12">Entre em Contato</h2>
-            <div class="max-w-xl mx-auto">
-                <div class="bg-white p-8 rounded-2xl shadow-sm">
-                    <form id="whatsappContactForm" class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium mb-1" for="nome">Nome</label>
-                            <input
-                                id="nome"
-                                name="nome"
-                                type="text"
-                                required
-                                class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
-                            >
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium mb-1" for="plano">Plano</label>
-                            <select
-                                id="plano"
-                                name="plano"
-                                required
-                                class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black bg-white"
-                            >
-                                <option value="" disabled selected>Selecione um plano</option>
-                                <option value="Lavagem Completa (R$ 50)">Lavagem Completa (R$ 50)</option>
-                                <option value="Lavagem Completa + Cera extra (R$ 60)">Lavagem Completa + Cera extra (R$ 60)</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium mb-1" for="mensagem">Mensagem</label>
-                            <textarea
-                                id="mensagem"
-                                name="mensagem"
-                                rows="4"
-                                required
-                                class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
-                            ></textarea>
-                        </div>
-                        <button
-                            type="submit"
-                            class="block text-center w-full bg-black text-white px-6 py-3 rounded-full hover:bg-gray-800 transition-colors"
-                        >
-                            Enviar pelo WhatsApp
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-black text-white py-12">
-        <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <img src="JRCarvalho.jpg" alt="JR Carvalho Logo" class="h-12 w-auto mb-6 md:mb-0">
-                <div class="text-center md:text-right">
-                    <p class="mb-2">contato@jrcarvalho.com</p>
-                    <p>(11) 99999-9999</p>
-                </div>
-            </div>
-            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
-                <p class="text-gray-400">&copy; 2025 JR Carvalho. Todos os direitos reservados.</p>
+            
+            <div class="mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between text-[10px] text-gray-700 font-bold uppercase tracking-widest">
+                <p>&copy; 2025 JR Carvalho Lavagem Automotiva</p>
+                <p>Farroupilha - Rio Grande do Sul</p>
             </div>
         </div>
     </footer>
-    <script>
-        document.getElementById('whatsappContactForm').addEventListener('submit', function (e) {
-            e.preventDefault();
 
-            const nome = document.getElementById('nome').value.trim();
-            const plano = document.getElementById('plano').value;
-            const mensagem = document.getElementById('mensagem').value.trim();
+    <!-- BOTÃO FLUTUANTE WHATSAPP -->
+    <a href="https://wa.me/5554997122343" target="_blank" class="fixed bottom-8 right-8 z-[100]">
+        <div class="bg-[#25D366] text-white p-5 rounded-3xl shadow-2xl shadow-green-900/40 hover:scale-110 transition-transform flex items-center gap-3">
+            <i class="fab fa-whatsapp text-2xl"></i>
+            <span class="font-black text-[10px] uppercase tracking-tighter">Agendar Agora</span>
+        </div>
+    </a>
 
-            const texto = `Olá, meu nome é ${nome}.%0APlano selecionado: ${plano}.%0A%0AMensagem:%0A${mensagem}`;
-            const url = `https://wa.me/555497122343?text=${encodeURIComponent(decodeURIComponent(texto))}`;
-
-            window.open(url, '_blank');
-        });
-    </script>
 </body>
 </html>
