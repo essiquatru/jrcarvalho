@@ -87,24 +87,36 @@
             scrollbar-width: none;
         }
 
-        /* Animação do Menu Fullscreen */
-        #mobile-menu {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            transform: translateX(100%);
+        /* --- ESTILOS DO NOVO MENU BOTTOM SHEET --- */
+        
+        /* O fundo escuro que cobre o site */
+        #menu-backdrop {
+            transition: opacity 0.4s ease;
             opacity: 0;
-            visibility: hidden;
+            pointer-events: none; /* Deixa clicar através quando invisível */
         }
-        #mobile-menu.active {
-            transform: translateX(0);
+        #menu-backdrop.active {
             opacity: 1;
-            visibility: visible;
+            pointer-events: auto;
         }
 
-        /* Background do Menu Aberto */
-        .menu-bg-overlay {
-            background-image: url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2070&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
+        /* A gaveta que sobe */
+        #bottom-sheet {
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); /* Easing estilo iOS */
+            transform: translateY(100%); /* Começa escondido em baixo */
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5);
+        }
+        #bottom-sheet.active {
+            transform: translateY(0);
+        }
+
+        /* Indicador de "arrastar" */
+        .sheet-handle {
+            width: 40px;
+            height: 4px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 99px;
+            margin: 12px auto 24px auto;
         }
     </style>
 </head>
@@ -128,7 +140,7 @@
                     </a>
                 </div>
                 
-                <!-- MENU DESKTOP -->
+                <!-- MENU DESKTOP (Visível apenas em telas grandes) -->
                 <nav class="hidden md:flex items-center space-x-10">
                     <a href="#inicio" class="nav-link text-sm font-semibold text-gray-300 hover:text-white uppercase tracking-widest">Início</a>
                     <a href="#precos" class="nav-link text-sm font-semibold text-gray-300 hover:text-white uppercase tracking-widest">Serviços</a>
@@ -138,71 +150,107 @@
                     </a>
                 </nav>
 
-                <!-- BOTÃO MENU MOBILE -->
+                <!-- BOTÃO MENU MOBILE (Dispara o Bottom Sheet) -->
                 <div class="md:hidden">
-                    <button type="button" onclick="toggleMenu(true)" class="p-2 text-white bg-white/5 rounded-lg border border-white/10">
-                        <i class="fas fa-bars-staggered text-2xl"></i>
+                    <button type="button" onclick="toggleBottomSheet(true)" class="p-3 text-white bg-white/5 rounded-xl border border-white/10 active:scale-90 transition-transform">
+                        <i class="fas fa-bars-staggered text-xl"></i>
                     </button>
                 </div>
             </div>
         </div>
-
-        <!-- MENU MOBILE FULLSCREEN CORRIGIDO -->
-        <div id="mobile-menu" class="fixed inset-0 z-[200] flex flex-col bg-brand-dark">
-            <!-- Background Imersivo com Filtro Escuro -->
-            <div class="absolute inset-0 z-0 menu-bg-overlay">
-                <div class="absolute inset-0 bg-brand-dark/95 backdrop-blur-sm"></div>
-            </div>
-
-            <!-- Topo do Menu -->
-            <div class="relative z-10 flex items-center justify-between p-6 h-24 border-b border-white/10">
-                <div class="flex items-center gap-3">
-                    <img src="jr_carvalho_hq.png" alt="Logo" class="h-10 w-10" onerror="this.style.display='none'">
-                    <span class="text-xl font-black uppercase tracking-tighter">JR CARVALHO</span>
-                </div>
-                <button onclick="toggleMenu(false)" class="h-12 w-12 rounded-full bg-brand-red text-white flex items-center justify-center shadow-lg shadow-red-900/40">
-                    <i class="fas fa-xmark text-2xl"></i>
-                </button>
-            </div>
-
-            <!-- Links Grandes para Touch -->
-            <div class="relative z-10 flex-grow flex flex-col justify-center px-8 space-y-6">
-                <a href="#inicio" onclick="toggleMenu(false)" class="flex items-center justify-between group">
-                    <span class="text-5xl font-black uppercase tracking-tighter text-white group-active:text-brand-red">Início</span>
-                    <div class="h-1 w-12 bg-brand-red rounded-full"></div>
-                </a>
-                <a href="#precos" onclick="toggleMenu(false)" class="flex items-center justify-between group">
-                    <span class="text-5xl font-black uppercase tracking-tighter text-white group-active:text-brand-red">Serviços</span>
-                    <div class="h-1 w-12 bg-white/20 rounded-full"></div>
-                </a>
-                <a href="#localizacao" onclick="toggleMenu(false)" class="flex items-center justify-between group">
-                    <span class="text-5xl font-black uppercase tracking-tighter text-white group-active:text-brand-red">Onde</span>
-                    <div class="h-1 w-12 bg-white/20 rounded-full"></div>
-                </a>
-            </div>
-
-            <!-- Rodapé do Menu -->
-            <div class="relative z-10 p-8 bg-black/40 border-t border-white/5 space-y-6">
-                <div class="flex items-center gap-4 text-gray-400">
-                    <i class="fas fa-location-dot text-brand-red"></i>
-                    <span class="text-xs font-bold uppercase tracking-widest">Farroupilha - RS</span>
-                </div>
-                <a href="https://wa.me/5554997122343" class="w-full flex items-center justify-center gap-3 py-5 bg-brand-red rounded-2xl font-black uppercase tracking-widest text-sm shadow-xl shadow-red-900/30">
-                    <i class="fab fa-whatsapp text-xl"></i> Agendar Lavagem
-                </a>
-            </div>
-        </div>
     </header>
 
+    <!-- === NOVO MENU MOBILE (BOTTOM SHEET / ESTILO IOS) === -->
+    
+    <!-- Camada Escura de Fundo (Backdrop) -->
+    <div id="menu-backdrop" class="fixed inset-0 z-[190] bg-black/80 backdrop-blur-sm" onclick="toggleBottomSheet(false)"></div>
+
+    <!-- A Gaveta Deslizante -->
+    <div id="bottom-sheet" class="fixed bottom-0 left-0 right-0 z-[200] bg-[#111] rounded-t-[35px] border-t border-white/10 pb-8 flex flex-col max-h-[90vh] overflow-y-auto">
+        
+        <!-- Indicador Visual de Arrastar -->
+        <div class="sheet-handle"></div>
+
+        <!-- Cabeçalho do Menu -->
+        <div class="px-8 pb-6 border-b border-white/5 flex items-center justify-between">
+            <span class="text-xs font-bold text-gray-500 uppercase tracking-widest">Menu de Navegação</span>
+            <button onclick="toggleBottomSheet(false)" class="text-gray-400 p-2 hover:text-white bg-white/5 rounded-full h-8 w-8 flex items-center justify-center">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <!-- Links de Navegação -->
+        <div class="p-4 space-y-2">
+            <a href="#inicio" onclick="toggleBottomSheet(false)" class="flex items-center gap-4 p-4 rounded-2xl hover:bg-white/5 active:bg-white/10 transition-colors group">
+                <div class="h-10 w-10 rounded-full bg-brand-red/10 flex items-center justify-center text-brand-red group-hover:bg-brand-red group-hover:text-white transition-colors">
+                    <i class="fas fa-home"></i>
+                </div>
+                <div class="flex-grow">
+                    <span class="block text-lg font-bold text-white">Início</span>
+                    <span class="text-xs text-gray-500">Página principal</span>
+                </div>
+                <i class="fas fa-chevron-right text-gray-600"></i>
+            </a>
+
+            <a href="#precos" onclick="toggleBottomSheet(false)" class="flex items-center gap-4 p-4 rounded-2xl hover:bg-white/5 active:bg-white/10 transition-colors group">
+                <div class="h-10 w-10 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-500 group-hover:bg-blue-500 group-hover:text-white transition-colors">
+                    <i class="fas fa-list-ul"></i>
+                </div>
+                <div class="flex-grow">
+                    <span class="block text-lg font-bold text-white">Serviços e Preços</span>
+                    <span class="text-xs text-gray-500">Tabela completa</span>
+                </div>
+                <i class="fas fa-chevron-right text-gray-600"></i>
+            </a>
+
+            <a href="#localizacao" onclick="toggleBottomSheet(false)" class="flex items-center gap-4 p-4 rounded-2xl hover:bg-white/5 active:bg-white/10 transition-colors group">
+                <div class="h-10 w-10 rounded-full bg-green-500/10 flex items-center justify-center text-green-500 group-hover:bg-green-500 group-hover:text-white transition-colors">
+                    <i class="fas fa-map-location-dot"></i>
+                </div>
+                <div class="flex-grow">
+                    <span class="block text-lg font-bold text-white">Localização</span>
+                    <span class="text-xs text-gray-500">Caxias do Sul - RS</span>
+                </div>
+                <i class="fas fa-chevron-right text-gray-600"></i>
+            </a>
+        </div>
+
+        <!-- Card de Destaque / CTA -->
+        <div class="mt-2 px-6">
+            <div class="bg-gradient-to-br from-brand-card to-black border border-white/10 p-5 rounded-3xl relative overflow-hidden">
+                <div class="relative z-10 flex flex-col gap-3">
+                    <div class="flex items-center gap-2">
+                        <span class="h-2 w-2 bg-green-500 rounded-full animate-pulse"></span>
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-gray-400">Atendimento Online</span>
+                    </div>
+                    <p class="text-sm text-gray-300">Quer agendar seu horário agora mesmo?</p>
+                    <a href="https://wa.me/5554997122343" onclick="toggleBottomSheet(false)" class="mt-2 w-full py-4 bg-brand-red rounded-xl flex items-center justify-center gap-2 text-sm font-black uppercase tracking-wide shadow-lg shadow-red-900/40 active:scale-95 transition-transform">
+                        <i class="fab fa-whatsapp text-lg"></i> Chamar no WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rodapé do Menu -->
+        <div class="mt-6 text-center">
+            <p class="text-[10px] text-gray-600 font-mono uppercase">JR Carvalho Estética Automotiva &copy; 2025</p>
+        </div>
+    </div>
+
+    <!-- Script de Controle do Bottom Sheet -->
     <script>
-        function toggleMenu(open) {
-            const menu = document.getElementById('mobile-menu');
+        function toggleBottomSheet(open) {
+            const backdrop = document.getElementById('menu-backdrop');
+            const sheet = document.getElementById('bottom-sheet');
+            
             if (open) {
-                menu.classList.add('active');
-                document.body.style.overflow = 'hidden';
+                backdrop.classList.add('active');
+                sheet.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Trava a rolagem da página atrás
             } else {
-                menu.classList.remove('active');
-                document.body.style.overflow = '';
+                backdrop.classList.remove('active');
+                sheet.classList.remove('active');
+                document.body.style.overflow = ''; // Libera a rolagem
             }
         }
     </script>
@@ -221,7 +269,7 @@
                         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-red opacity-75"></span>
                         <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-red"></span>
                     </span>
-                    <span class="text-[10px] font-bold text-brand-red uppercase tracking-widest">Atendimento Premium</span>
+                    <span class="text-[10px] font-bold text-brand-red uppercase tracking-widest">Caxias do Sul</span>
                 </div>
                 
                 <h1 class="text-6xl lg:text-8xl font-black tracking-tighter mb-8 leading-[0.9]">
@@ -374,7 +422,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                 <div class="lg:col-span-5">
                     <h2 class="text-brand-red font-bold uppercase tracking-widest text-xs mb-4">Onde Estamos</h2>
-                    <h3 class="text-5xl font-black mb-8 uppercase tracking-tighter leading-none">Bairro Salgado Filho, <span class="text-gray-600">Farroupilha.</span></h3>
+                    <h3 class="text-5xl font-black mb-8 uppercase tracking-tighter leading-none">Bairro Salgado Filho, <span class="text-gray-600">Caxias do Sul.</span></h3>
                     
                     <div class="p-8 bg-brand-card rounded-3xl border border-white/5 space-y-8">
                         <div class="flex gap-6">
@@ -384,7 +432,7 @@
                             <div>
                                 <p class="text-gray-500 text-[10px] font-bold uppercase tracking-[0.2em] mb-1">Endereço</p>
                                 <p class="text-lg font-bold">Rua Vitório Madalosso, 140</p>
-                                <p class="text-gray-400 text-sm">Farroupilha - RS, 95171-334</p>
+                                <p class="text-gray-400 text-sm">Caxias do Sul - RS, 95098-460</p>
                             </div>
                         </div>
 
@@ -403,9 +451,10 @@
 
                 <div class="lg:col-span-7 h-[450px] lg:h-[550px] relative">
                     <div class="absolute inset-0 rounded-[40px] overflow-hidden border border-white/10 shadow-2xl">
+                        <!-- IFRAME ATUALIZADO PARA RUA VITÓRIO MADALOSSO, 140, CAXIAS DO SUL -->
                         <iframe 
                             class="map-container w-full h-full"
-                            src="https://www.google.com/maps/embed?pb=!1m13!1m8!1m3!1d217.69908383572204!2d-51.1886406!3d-29.1886698!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjnCsDExJzE5LjEiUyA1McKwMTEnMTguNiJX!5e0!3m2!1spt-BR!2sbr!4v1766613922915!5m2!1spt-BR!2sbr" 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3486.204595886047!2d-51.18919632352528!3d-29.10099519159981!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x951ea2d1c68e1c69%3A0xb3a8a3a0c64c2f6d!2sR.%20Vit%C3%B3rio%20Madalosso%2C%20140%20-%20Salgado%20Filho%2C%20Caxias%20do%20Sul%20-%20RS%2C%2095098-460!5e0!3m2!1spt-BR!2sbr!4v1703648924000!5m2!1spt-BR!2sbr" 
                             style="border:0;" allowfullscreen="" loading="lazy">
                         </iframe>
                     </div>
@@ -421,7 +470,7 @@
                 <div class="col-span-1 lg:col-span-2">
                     <span class="text-3xl font-black tracking-tighter block mb-6 uppercase text-white">JR CARVALHO</span>
                     <p class="text-gray-500 max-w-sm text-sm leading-relaxed mb-6">
-                        Estética automotiva de alto padrão em Farroupilha. Cuidado técnico para preservar o brilho e a vida útil do seu veículo.
+                        Estética automotiva de alto padrão em Caxias do Sul. Cuidado técnico para preservar o brilho e a vida útil do seu veículo.
                     </p>
                 </div>
 
@@ -437,10 +486,10 @@
                 <div>
                     <h4 class="text-white font-bold uppercase text-xs tracking-widest mb-6">Legal</h4>
                     <div class="text-[11px] text-gray-600 space-y-2 font-mono">
-                        <p class="uppercase font-bold">JR CARVALHO ESTÉTICA</p>
-                        <p>CPF: <span class="text-gray-500">000.000.000-00</span></p>
-                        <p>Titular: <span class="text-gray-500">[NOME COMPLETO]</span></p>
-                        <p>Rua Vitório Madalosso, 140 - RS</p>
+                        <p class="uppercase font-bold text-gray-400">JOSIAS CARVALHO DOS SANTOS</p>
+                        <p>CNPJ: <span class="text-gray-500">63.967.942/0001-63</span></p>
+                        <p>Resp: <span class="text-gray-500">Josias Carvalho</span></p>
+                        <p>Rua Vitório Madalosso, 140<br>Salgado Filho, Caxias do Sul - RS<br>CEP: 95098-460</p>
                     </div>
                 </div>
             </div>
