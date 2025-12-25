@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Inter:wght@400;700&display=swap" rel="stylesheet">
 
     <script>
         tailwind.config = {
@@ -91,6 +91,15 @@
             text-align: center;
             padding: 5px;
         }
+
+        /* Scrollbars ocultas para o carrossel mobile */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
     </style>
 </head>
 <body class="bg-brand-dark text-white font-sans antialiased selection:bg-brand-red selection:text-white">
@@ -109,7 +118,7 @@
                                  class="h-14 w-14 object-contain" 
                                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                             <div class="logo-placeholder hidden">
-                                <i class="fas fa-image mb-1"></i><br>JRCARVALHO ERROR IMG
+                                <i class="fas fa-image mb-1"></i><br>LOGO
                             </div>
                         </div>
                         
@@ -169,7 +178,7 @@
                         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-red opacity-75"></span>
                         <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-red"></span>
                     </span>
-                    <span class="text-[10px] font-bold text-brand-red uppercase tracking-widest">Boas vindas</span>
+                    <span class="text-[10px] font-bold text-brand-red uppercase tracking-widest">Aberto agora em Farroupilha</span>
                 </div>
                 
                 <h1 class="text-6xl lg:text-8xl font-black tracking-tighter mb-8 leading-[0.9]">
@@ -194,103 +203,140 @@
         </div>
     </section>
 
-    <!-- TABELA DE PREÇOS -->
-    <section id="precos" class="py-32 bg-brand-dark">
+    <!-- TABELA DE PREÇOS (REDESIGN: SCROLL LATERAL MOBILE) -->
+    <section id="precos" class="py-32 bg-brand-dark overflow-hidden">
         <div class="max-w-7xl mx-auto px-4">
-            <div class="mb-20">
+            <div class="mb-12 md:mb-20 px-2">
                 <h2 class="text-brand-red font-bold uppercase tracking-widest text-xs mb-4">Escolha seu plano</h2>
-                <h3 class="text-5xl font-black tracking-tight uppercase">Investimento por <span class="text-gray-600">Categoria.</span></h3>
+                <h3 class="text-4xl md:text-5xl font-black tracking-tight uppercase leading-none">Investimento por <br><span class="text-gray-600">Categoria.</span></h3>
+                <p class="md:hidden text-gray-500 text-xs mt-4 flex items-center gap-2">
+                    <i class="fas fa-hand-pointer animate-bounce"></i> Deslize para o lado para ver mais
+                </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- Container com Scroll Snap para Mobile -->
+            <div class="flex lg:grid lg:grid-cols-4 gap-4 overflow-x-auto snap-x snap-mandatory lg:overflow-visible pb-8 lg:pb-0 hide-scrollbar px-2 -mx-2 lg:mx-0">
+                
                 <!-- PASSEIO -->
-                <div class="pricing-card bg-brand-card p-10 rounded-[40px] border border-white/5 flex flex-col group">
-                    <div class="mb-10 text-brand-red group-hover:scale-110 transition-transform origin-left">
+                <div class="min-w-[85vw] sm:min-w-[45vw] lg:min-w-0 snap-center pricing-card bg-brand-card p-8 md:p-10 rounded-[30px] border border-white/5 flex flex-col group relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-20 transition-opacity">
+                        <i class="fas fa-car-side text-8xl"></i>
+                    </div>
+                    <div class="mb-8 text-brand-red group-hover:scale-110 transition-transform origin-left">
                         <i class="fas fa-car-side text-4xl"></i>
                     </div>
                     <h4 class="text-2xl font-black mb-1 uppercase">Passeio</h4>
-                    <p class="text-gray-500 text-[10px] uppercase font-bold tracking-widest mb-10">Compactos e Sedans</p>
-                    <div class="space-y-6 flex-grow">
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-400 text-sm">Completa</span>
-                            <span class="text-2xl font-black">R$ 50</span>
+                    <p class="text-gray-500 text-[10px] uppercase font-bold tracking-widest mb-8">Compactos e Sedans</p>
+                    <div class="space-y-4 flex-grow relative z-10">
+                        <div class="flex justify-between items-center p-3 bg-white/5 rounded-xl border border-white/5">
+                            <span class="text-gray-300 text-xs font-bold uppercase">Completa</span>
+                            <span class="text-2xl font-black text-white">R$ 50</span>
                         </div>
-                        <div class="flex justify-between items-center opacity-60">
-                            <span class="text-gray-400 text-sm">Ducha</span>
+                        <div class="flex justify-between items-center px-3 opacity-60">
+                            <span class="text-gray-400 text-xs uppercase">Ducha</span>
                             <span class="text-xl font-bold">R$ 30</span>
                         </div>
                     </div>
-                    <a href="https://wa.me/5554997122343" class="mt-12 block text-center py-4 border border-white/10 rounded-2xl text-xs font-bold hover:bg-white hover:text-black transition-all uppercase tracking-tighter">Reservar</a>
+                    <a href="https://wa.me/5554997122343" class="mt-8 w-full block text-center py-4 border border-white/10 rounded-2xl text-xs font-black hover:bg-white hover:text-black transition-all uppercase tracking-widest">Reservar</a>
                 </div>
 
-                <!-- SUV -->
-                <div class="pricing-card bg-white p-10 rounded-[40px] flex flex-col transform lg:-translate-y-6">
-                    <div class="mb-10 text-brand-red">
+                <!-- SUV (DESTAQUE) -->
+                <div class="min-w-[85vw] sm:min-w-[45vw] lg:min-w-0 snap-center pricing-card bg-white p-8 md:p-10 rounded-[30px] flex flex-col transform lg:-translate-y-6 shadow-2xl shadow-white/5 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-6 opacity-5">
+                        <i class="fas fa-truck-pickup text-8xl text-black"></i>
+                    </div>
+                    <div class="mb-8 text-brand-red">
                         <i class="fas fa-truck-pickup text-4xl"></i>
                     </div>
                     <h4 class="text-2xl font-black text-black mb-1 uppercase">SUV</h4>
-                    <p class="text-gray-400 text-[10px] uppercase font-bold tracking-widest mb-10">Utilitários</p>
-                    <div class="space-y-6 flex-grow">
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-600 text-sm font-bold uppercase">Completa</span>
+                    <p class="text-gray-400 text-[10px] uppercase font-bold tracking-widest mb-8">Utilitários</p>
+                    <div class="space-y-4 flex-grow relative z-10">
+                        <div class="flex justify-between items-center p-3 bg-brand-dark/5 rounded-xl border border-brand-dark/10">
+                            <span class="text-gray-600 text-xs font-bold uppercase">Completa</span>
                             <span class="text-3xl font-black text-black">R$ 60</span>
                         </div>
                     </div>
-                    <a href="https://wa.me/5554997122343" class="mt-12 block text-center py-5 bg-brand-red text-white rounded-2xl text-xs font-black uppercase shadow-xl shadow-red-900/20 tracking-tighter">Agendar SUV</a>
+                    <a href="https://wa.me/5554997122343" class="mt-8 w-full block text-center py-5 bg-brand-red text-white rounded-2xl text-xs font-black uppercase shadow-xl shadow-red-900/30 tracking-widest hover:bg-red-700 transition-colors">Agendar SUV</a>
                 </div>
 
                 <!-- CAMIONETE -->
-                <div class="pricing-card bg-brand-card p-10 rounded-[40px] border border-white/5 flex flex-col">
-                    <div class="mb-10 text-brand-red">
+                <div class="min-w-[85vw] sm:min-w-[45vw] lg:min-w-0 snap-center pricing-card bg-brand-card p-8 md:p-10 rounded-[30px] border border-white/5 flex flex-col group relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-20 transition-opacity">
+                        <i class="fas fa-truck text-8xl"></i>
+                    </div>
+                    <div class="mb-8 text-brand-red">
                         <i class="fas fa-truck text-4xl"></i>
                     </div>
                     <h4 class="text-2xl font-black mb-1 uppercase">Camionete</h4>
-                    <p class="text-gray-500 text-[10px] uppercase font-bold tracking-widest mb-10">Grandes Veículos</p>
-                    <div class="space-y-6 flex-grow">
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-400 text-sm font-bold uppercase">Completa</span>
+                    <p class="text-gray-500 text-[10px] uppercase font-bold tracking-widest mb-8">Grandes Veículos</p>
+                    <div class="space-y-4 flex-grow relative z-10">
+                        <div class="flex justify-between items-center p-3 bg-white/5 rounded-xl border border-white/5">
+                            <span class="text-gray-300 text-xs font-bold uppercase">Completa</span>
                             <span class="text-2xl font-black">R$ 80</span>
                         </div>
                     </div>
-                    <a href="https://wa.me/5554997122343" class="mt-12 block text-center py-4 border border-white/10 rounded-2xl text-xs font-bold hover:bg-white hover:text-black transition-all uppercase tracking-tighter">Reservar</a>
+                    <a href="https://wa.me/5554997122343" class="mt-8 w-full block text-center py-4 border border-white/10 rounded-2xl text-xs font-black hover:bg-white hover:text-black transition-all uppercase tracking-widest">Reservar</a>
                 </div>
 
                 <!-- VANS -->
-                <div class="pricing-card bg-brand-card p-10 rounded-[40px] border border-white/5 flex flex-col">
-                    <div class="mb-10 text-brand-red">
+                <div class="min-w-[85vw] sm:min-w-[45vw] lg:min-w-0 snap-center pricing-card bg-brand-card p-8 md:p-10 rounded-[30px] border border-white/5 flex flex-col group relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-20 transition-opacity">
+                        <i class="fas fa-bus text-8xl"></i>
+                    </div>
+                    <div class="mb-8 text-brand-red">
                         <i class="fas fa-bus text-4xl"></i>
                     </div>
                     <h4 class="text-2xl font-black mb-1 uppercase">Vans</h4>
-                    <p class="text-gray-500 text-[10px] uppercase font-bold tracking-widest mb-10">Frota Comercial</p>
-                    <div class="space-y-6 flex-grow">
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-400 text-sm font-bold uppercase">Completa</span>
+                    <p class="text-gray-500 text-[10px] uppercase font-bold tracking-widest mb-8">Frota Comercial</p>
+                    <div class="space-y-4 flex-grow relative z-10">
+                        <div class="flex justify-between items-center p-3 bg-white/5 rounded-xl border border-white/5">
+                            <span class="text-gray-300 text-xs font-bold uppercase">Completa</span>
                             <span class="text-2xl font-black">R$ 150</span>
                         </div>
                     </div>
-                    <a href="https://wa.me/5554997122343" class="mt-12 block text-center py-4 border border-white/10 rounded-2xl text-xs font-bold hover:bg-white hover:text-black transition-all uppercase tracking-tighter">Reservar</a>
+                    <a href="https://wa.me/5554997122343" class="mt-8 w-full block text-center py-4 border border-white/10 rounded-2xl text-xs font-black hover:bg-white hover:text-black transition-all uppercase tracking-widest">Reservar</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- SEÇÃO UBER (REINSERIDA) -->
+    <!-- SEÇÃO UBER (REDESIGN: LOGO DUPLA) -->
     <section class="max-w-7xl mx-auto px-4 mb-20">
-        <div class="relative rounded-[40px] overflow-hidden bg-black border border-white/5">
+        <div class="relative rounded-[40px] overflow-hidden bg-black border border-white/10 group">
             <div class="grid grid-cols-1 md:grid-cols-2 items-center">
-                <div class="p-10 md:p-20">
-                    <div class="flex items-center gap-3 mb-8">
-                        <div class="bg-white text-black p-2 rounded-lg"><i class="fab fa-uber text-2xl"></i></div>
-                        <span class="text-white font-bold text-[10px] uppercase tracking-[0.3em]">Parceiros de Farroupilha</span>
+                <div class="p-8 md:p-20 relative z-10">
+                    <div class="flex items-center gap-4 mb-8">
+                        <div class="bg-white text-black p-3 rounded-xl shadow-lg shadow-white/20">
+                            <i class="fab fa-uber text-3xl"></i>
+                        </div>
+                        <div class="text-white font-black text-2xl tracking-tighter">Uber</div>
+                        <div class="h-8 w-[1px] bg-white/20 mx-2"></div>
+                        <span class="text-brand-red font-bold text-[10px] uppercase tracking-[0.2em]">Parceiro Oficial</span>
                     </div>
-                    <h3 class="text-5xl font-black text-white mb-6 uppercase tracking-tighter">Tarifa <span class="text-brand-red">Uber.</span></h3>
-                    <p class="text-gray-400 mb-10 max-w-sm text-lg leading-relaxed">Mantenha sua ferramenta de trabalho impecável com o melhor custo-benefício para motoristas parceiros.</p>
-                    <div class="flex items-center gap-8 mb-10">
-                        <div class="text-5xl font-black text-white">R$ 30 <small class="text-[10px] text-gray-500 uppercase block tracking-widest mt-2">Ducha Exclusiva</small></div>
+                    
+                    <h3 class="text-4xl md:text-5xl font-black text-white mb-6 uppercase tracking-tighter leading-tight">
+                        Tarifa <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-red to-orange-600">Exclusiva.</span>
+                    </h3>
+                    
+                    <p class="text-gray-400 mb-10 max-w-sm text-base leading-relaxed">
+                        Mantenha sua ferramenta de trabalho impecável. Preço especial para motoristas de app credenciados.
+                    </p>
+                    
+                    <div class="flex items-end gap-4 mb-10">
+                        <div class="text-6xl font-black text-white">R$ 30</div>
+                        <div class="text-gray-500 font-bold uppercase tracking-widest text-xs mb-2">/ Ducha</div>
                     </div>
-                    <a href="https://wa.me/5554997122343?text=Sou%20motorista%20Uber" target="_blank" class="inline-block px-10 py-5 bg-brand-red text-white font-black uppercase text-xs rounded-2xl hover:bg-red-700 transition-all shadow-xl shadow-red-900/30">Resgatar Promoção</a>
+                    
+                    <a href="https://wa.me/5554997122343?text=Sou%20motorista%20Uber" target="_blank" class="inline-flex items-center gap-3 px-8 py-4 bg-white text-black font-black uppercase text-xs rounded-xl hover:bg-brand-red hover:text-white transition-all">
+                        Resgatar Promoção <i class="fas fa-arrow-right"></i>
+                    </a>
                 </div>
-                <div class="hidden md:block h-full min-h-[500px] bg-[url('https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-40"></div>
+                
+                <!-- Imagem de fundo estilizada -->
+                <div class="absolute inset-0 md:static md:h-full min-h-[400px]">
+                    <img src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover opacity-20 md:opacity-60 grayscale mix-blend-luminosity" alt="Uber Car">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent md:bg-gradient-to-r md:from-black md:via-transparent md:to-transparent"></div>
+                </div>
             </div>
         </div>
     </section>
@@ -333,8 +379,8 @@
                     </a>
                 </div>
 
-                <div class="lg:col-span-7 h-[600px] relative">
-                    <div class="absolute inset-0 rounded-[50px] overflow-hidden border border-white/10 shadow-2xl">
+                <div class="lg:col-span-7 h-[500px] lg:h-[600px] relative">
+                    <div class="absolute inset-0 rounded-[40px] overflow-hidden border border-white/10 shadow-2xl">
                         <!-- EMBED EXATO PARA AS COORDENADAS -->
                         <iframe 
                             class="map-container w-full h-full"
@@ -349,29 +395,60 @@
         </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer class="bg-black pt-24 pb-12 border-t border-white/5">
+    <!-- FOOTER LEGAL (ATUALIZADO PARA HOSPEDAGEM/VALIDAÇÃO) -->
+    <footer class="bg-black pt-20 pb-10 border-t border-white/5">
         <div class="max-w-7xl mx-auto px-4">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-12 text-uppercase">
-                <div>
-                    <span class="text-4xl font-black tracking-tighter block mb-4 uppercase">JR CARVALHO</span>
-                    <p class="text-gray-600 max-w-sm text-sm">
-                        Especialistas em estética automotiva. Transformamos a aparência do seu veículo com técnicas avançadas e cuidado profissional.
+            
+            <!-- Grid Principal -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                <!-- Coluna Marca -->
+                <div class="col-span-1 lg:col-span-2">
+                    <span class="text-3xl font-black tracking-tighter block mb-6 uppercase text-white">JR CARVALHO</span>
+                    <p class="text-gray-500 max-w-sm text-sm leading-relaxed mb-6">
+                        Transformamos veículos com estética de alta performance. Cuidado, técnica e os melhores produtos para quem ama carro.
                     </p>
+                    <div class="flex gap-4">
+                        <a href="https://wa.me/5554997122343" target="_blank" class="h-10 w-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-brand-red transition-colors text-white">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="#" class="h-10 w-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-brand-red transition-colors text-white">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
                 </div>
-                <div class="flex gap-4">
-                    <a href="https://wa.me/5554997122343" target="_blank" class="h-12 w-12 bg-white/5 rounded-full flex items-center justify-center hover:bg-brand-red transition-colors text-white">
-                        <i class="fab fa-whatsapp"></i>
-                    </a>
-                    <a href="#" class="h-12 w-12 bg-white/5 rounded-full flex items-center justify-center hover:bg-brand-red transition-colors text-white">
-                        <i class="fab fa-instagram"></i>
-                    </a>
+
+                <!-- Coluna Links Rápidos -->
+                <div>
+                    <h4 class="text-white font-bold uppercase text-xs tracking-widest mb-6">Navegação</h4>
+                    <ul class="space-y-3 text-sm text-gray-500">
+                        <li><a href="#inicio" class="hover:text-brand-red transition-colors">Início</a></li>
+                        <li><a href="#precos" class="hover:text-brand-red transition-colors">Serviços e Preços</a></li>
+                        <li><a href="#localizacao" class="hover:text-brand-red transition-colors">Localização</a></li>
+                    </ul>
+                </div>
+
+                <!-- Coluna Legal (Dados para Google/Hospedagem) -->
+                <div>
+                    <h4 class="text-white font-bold uppercase text-xs tracking-widest mb-6">Dados da Empresa</h4>
+                    <div class="text-xs text-gray-600 space-y-2 font-mono">
+                        <p class="uppercase">JR CARVALHO ESTÉTICA</p>
+                        <!-- SUBSTITUA ESTES DADOS -->
+                        <p>CPF/CNPJ: <span class="text-gray-500">000.000.000-00</span></p>
+                        <p>Resp: <span class="text-gray-500">[NOME DO TITULAR]</span></p>
+                        <p>Rua Vitório Madalosso, 140<br>Salgado Filho, Farroupilha - RS<br>CEP: 95171-334</p>
+                    </div>
                 </div>
             </div>
             
-            <div class="mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between text-[10px] text-gray-700 font-bold uppercase tracking-widest">
-                <p>&copy; 2025 JR Carvalho Lavagem Automotiva</p>
-                <p>Farroupilha - Rio Grande do Sul</p>
+            <!-- Aviso de Privacidade e Copyright -->
+            <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                <div class="text-[10px] text-gray-600 font-medium max-w-2xl leading-relaxed">
+                    <strong class="text-gray-500 block mb-1 uppercase tracking-wider">Termos de Privacidade e Uso de Dados:</strong>
+                    Ao entrar em contato via WhatsApp para agendamentos, o usuário concorda com o fornecimento de informações básicas (Nome, Modelo do Veículo, Placa) estritamente para fins de cadastro e execução do serviço de lavagem. A JR Carvalho compromete-se a não compartilhar, vender ou divulgar esses dados a terceiros, garantindo o sigilo e a segurança das informações conforme a LGPD.
+                </div>
+                <div class="text-[10px] text-gray-700 font-bold uppercase tracking-widest whitespace-nowrap">
+                    &copy; 2025 JR Carvalho.
+                </div>
             </div>
         </div>
     </footer>
