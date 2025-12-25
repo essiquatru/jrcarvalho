@@ -100,12 +100,23 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
+
+        /* Estilos do Menu Fullscreen */
+        #mobile-menu {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(-100%);
+            opacity: 0;
+        }
+        #mobile-menu.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
     </style>
 </head>
-<body class="bg-brand-dark text-white font-sans antialiased selection:bg-brand-red selection:text-white">
+<body class="bg-brand-dark text-white font-sans antialiased selection:bg-brand-red selection:text-white overflow-x-hidden">
 
     <!-- CABEÇALHO (HEADER) -->
-    <header class="fixed w-full z-50 header-glass">
+    <header class="fixed w-full z-[100] header-glass">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-24">
                 
@@ -140,29 +151,82 @@
                     </a>
                 </nav>
 
-                <!-- BOTÃO MOBILE -->
+                <!-- BOTÃO MOBILE (ABRE MENU) -->
                 <div class="md:hidden">
-                    <button type="button" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="p-2 text-gray-400 hover:text-white">
-                        <i class="fas fa-th-large text-2xl"></i>
+                    <button type="button" onclick="toggleMenu(true)" class="p-2 text-gray-400 hover:text-white transition-colors">
+                        <i class="fas fa-bars-staggered text-3xl"></i>
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- MENU MOBILE -->
-        <div class="hidden md:hidden bg-brand-dark/98 border-t border-white/5" id="mobile-menu">
-            <div class="px-6 py-8 space-y-4">
-                <a href="#inicio" class="block text-xl font-bold hover:text-brand-red transition-colors">Início</a>
-                <a href="#precos" class="block text-xl font-bold hover:text-brand-red transition-colors">Preços</a>
-                <a href="#localizacao" class="block text-xl font-bold hover:text-brand-red transition-colors">Localização</a>
-                <hr class="border-white/5">
-                <div class="flex flex-col gap-2">
-                    <span class="text-[10px] text-gray-500 uppercase tracking-widest">Farroupilha, RS</span>
-                    <a href="https://wa.me/5554997122343" class="w-full text-center py-4 bg-brand-red rounded-xl font-bold">Falar no WhatsApp</a>
+        <!-- NOVO MENU MOBILE FULLSCREEN -->
+        <div id="mobile-menu" class="fixed inset-0 z-[200] hidden flex-col bg-brand-dark">
+            <!-- Background do Menu Mobile -->
+            <div class="absolute inset-0 z-0">
+                <img src="https://images.unsplash.com/photo-1605152276897-4f618f831968?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover opacity-20 grayscale" alt="Menu BG">
+                <div class="absolute inset-0 bg-gradient-to-b from-brand-dark via-brand-dark/90 to-brand-dark"></div>
+            </div>
+
+            <!-- Header do Menu (Logo e Botão Fechar) -->
+            <div class="relative z-10 flex items-center justify-between p-6 h-24 border-b border-white/5">
+                <div class="flex items-center gap-3">
+                    <img src="jr_carvalho_hq.png" alt="Logo" class="h-10 w-10 object-contain" onerror="this.style.display='none'">
+                    <span class="text-xl font-black tracking-tighter uppercase">JR CARVALHO</span>
+                </div>
+                <button onclick="toggleMenu(false)" class="h-12 w-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white active:scale-90 transition-transform">
+                    <i class="fas fa-xmark text-2xl"></i>
+                </button>
+            </div>
+
+            <!-- Links do Menu -->
+            <div class="relative z-10 flex-grow flex flex-col justify-center px-10 space-y-8">
+                <a href="#inicio" onclick="toggleMenu(false)" class="group flex items-center justify-between border-b border-white/5 pb-4">
+                    <span class="text-4xl font-black uppercase tracking-tighter group-hover:text-brand-red transition-colors">Início</span>
+                    <i class="fas fa-arrow-right text-brand-red opacity-0 group-hover:opacity-100 transition-all -translate-x-4 group-hover:translate-x-0"></i>
+                </a>
+                <a href="#precos" onclick="toggleMenu(false)" class="group flex items-center justify-between border-b border-white/5 pb-4">
+                    <span class="text-4xl font-black uppercase tracking-tighter group-hover:text-brand-red transition-colors">Serviços</span>
+                    <i class="fas fa-arrow-right text-brand-red opacity-0 group-hover:opacity-100 transition-all -translate-x-4 group-hover:translate-x-0"></i>
+                </a>
+                <a href="#localizacao" onclick="toggleMenu(false)" class="group flex items-center justify-between border-b border-white/5 pb-4">
+                    <span class="text-4xl font-black uppercase tracking-tighter group-hover:text-brand-red transition-colors">Onde Estamos</span>
+                    <i class="fas fa-arrow-right text-brand-red opacity-0 group-hover:opacity-100 transition-all -translate-x-4 group-hover:translate-x-0"></i>
+                </a>
+            </div>
+
+            <!-- Rodapé do Menu Mobile -->
+            <div class="relative z-10 p-10 space-y-6">
+                <div class="flex flex-col gap-1">
+                    <span class="text-[10px] text-gray-500 uppercase tracking-[0.3em] font-bold">Localização</span>
+                    <p class="text-sm font-semibold">Farroupilha, RS - Bairro Salgado Filho</p>
+                </div>
+                <a href="https://wa.me/5554997122343" class="w-full flex items-center justify-center gap-3 py-5 bg-brand-red rounded-2xl font-black uppercase tracking-widest shadow-xl shadow-red-900/40">
+                    <i class="fab fa-whatsapp text-xl"></i> Agendar Lavagem
+                </a>
+                <div class="flex justify-center gap-6 pt-4">
+                    <a href="#" class="text-gray-500 hover:text-white"><i class="fab fa-instagram text-2xl"></i></a>
+                    <a href="#" class="text-gray-500 hover:text-white"><i class="fab fa-facebook text-2xl"></i></a>
                 </div>
             </div>
         </div>
     </header>
+
+    <!-- Script de Controle do Menu -->
+    <script>
+        function toggleMenu(open) {
+            const menu = document.getElementById('mobile-menu');
+            if (open) {
+                menu.classList.remove('hidden');
+                document.body.style.overflow = 'hidden'; // Trava scroll da página
+                setTimeout(() => menu.classList.add('active'), 10);
+            } else {
+                menu.classList.remove('active');
+                document.body.style.overflow = ''; // Libera scroll
+                setTimeout(() => menu.classList.add('hidden'), 500);
+            }
+        }
+    </script>
 
     <!-- HERO SECTION -->
     <section id="inicio" class="relative min-h-screen flex items-center pt-24 overflow-hidden">
@@ -214,7 +278,6 @@
                 </p>
             </div>
 
-            <!-- Container com Scroll Snap para Mobile -->
             <div class="flex lg:grid lg:grid-cols-4 gap-4 overflow-x-auto snap-x snap-mandatory lg:overflow-visible pb-8 lg:pb-0 hide-scrollbar px-2 -mx-2 lg:mx-0">
                 
                 <!-- PASSEIO -->
@@ -300,7 +363,7 @@
         </div>
     </section>
 
-    <!-- SEÇÃO UBER (REDESIGN: LOGO DUPLA) -->
+    <!-- SEÇÃO UBER -->
     <section class="max-w-7xl mx-auto px-4 mb-20">
         <div class="relative rounded-[40px] overflow-hidden bg-black border border-white/10 group">
             <div class="grid grid-cols-1 md:grid-cols-2 items-center">
@@ -332,7 +395,6 @@
                     </a>
                 </div>
                 
-                <!-- Imagem de fundo estilizada -->
                 <div class="absolute inset-0 md:static md:h-full min-h-[400px]">
                     <img src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover opacity-20 md:opacity-60 grayscale mix-blend-luminosity" alt="Uber Car">
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent md:bg-gradient-to-r md:from-black md:via-transparent md:to-transparent"></div>
@@ -373,7 +435,6 @@
                         </div>
                     </div>
                     
-                    <!-- LINK EXATO FORNECIDO -->
                     <a href="https://www.google.com/maps/place/29%C2%B011'19.1%22S+51%C2%B011'18.6%22W/@-29.1886698,-51.1886406,21z/data=!4m4!3m3!8m2!3d-29.1886389!4d-51.1885?hl=pt-BR&entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoKLDEwMDc5MjA3MUgBUAM%3D" target="_blank" class="mt-8 inline-flex items-center gap-3 text-brand-red font-black text-xs uppercase tracking-widest hover:gap-5 transition-all">
                         Traçar Rota no Waze ou Maps <i class="fas fa-arrow-right"></i>
                     </a>
@@ -381,7 +442,6 @@
 
                 <div class="lg:col-span-7 h-[500px] lg:h-[600px] relative">
                     <div class="absolute inset-0 rounded-[40px] overflow-hidden border border-white/10 shadow-2xl">
-                        <!-- EMBED EXATO PARA AS COORDENADAS -->
                         <iframe 
                             class="map-container w-full h-full"
                             src="https://www.google.com/maps/embed?pb=!1m13!1m8!1m3!1d217.69908383572204!2d-51.1886406!3d-29.1886698!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjnCsDExJzE5LjEiUyA1McKwMTEnMTguNiJX!5e0!3m2!1spt-BR!2sbr!4v1766613922915!5m2!1spt-BR!2sbr" 
@@ -395,13 +455,11 @@
         </div>
     </section>
 
-    <!-- FOOTER LEGAL (ATUALIZADO PARA HOSPEDAGEM/VALIDAÇÃO) -->
+    <!-- FOOTER LEGAL -->
     <footer class="bg-black pt-20 pb-10 border-t border-white/5">
         <div class="max-w-7xl mx-auto px-4">
             
-            <!-- Grid Principal -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-                <!-- Coluna Marca -->
                 <div class="col-span-1 lg:col-span-2">
                     <span class="text-3xl font-black tracking-tighter block mb-6 uppercase text-white">JR CARVALHO</span>
                     <p class="text-gray-500 max-w-sm text-sm leading-relaxed mb-6">
@@ -417,7 +475,6 @@
                     </div>
                 </div>
 
-                <!-- Coluna Links Rápidos -->
                 <div>
                     <h4 class="text-white font-bold uppercase text-xs tracking-widest mb-6">Navegação</h4>
                     <ul class="space-y-3 text-sm text-gray-500">
@@ -427,12 +484,10 @@
                     </ul>
                 </div>
 
-                <!-- Coluna Legal (Dados para Google/Hospedagem) -->
                 <div>
                     <h4 class="text-white font-bold uppercase text-xs tracking-widest mb-6">Dados da Empresa</h4>
                     <div class="text-xs text-gray-600 space-y-2 font-mono">
-                        <p class="uppercase">JR CARVALHO ESTÉTICA</p>
-                        <!-- SUBSTITUA ESTES DADOS -->
+                        <p class="uppercase font-bold text-gray-400">JR CARVALHO ESTÉTICA</p>
                         <p>CPF/CNPJ: <span class="text-gray-500">000.000.000-00</span></p>
                         <p>Resp: <span class="text-gray-500">[NOME DO TITULAR]</span></p>
                         <p>Rua Vitório Madalosso, 140<br>Salgado Filho, Farroupilha - RS<br>CEP: 95171-334</p>
@@ -440,10 +495,9 @@
                 </div>
             </div>
             
-            <!-- Aviso de Privacidade e Copyright -->
             <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                 <div class="text-[10px] text-gray-600 font-medium max-w-2xl leading-relaxed">
-                    <strong class="text-gray-500 block mb-1 uppercase tracking-wider">Termos de Privacidade e Uso de Dados:</strong>
+                    <strong class="text-gray-500 block mb-1 uppercase tracking-wider text-[11px]">Termos de Privacidade e Uso de Dados:</strong>
                     Ao entrar em contato via WhatsApp para agendamentos, o usuário concorda com o fornecimento de informações básicas (Nome, Modelo do Veículo, Placa) estritamente para fins de cadastro e execução do serviço de lavagem. A JR Carvalho compromete-se a não compartilhar, vender ou divulgar esses dados a terceiros, garantindo o sigilo e a segurança das informações conforme a LGPD.
                 </div>
                 <div class="text-[10px] text-gray-700 font-bold uppercase tracking-widest whitespace-nowrap">
@@ -454,7 +508,7 @@
     </footer>
 
     <!-- BOTÃO FLUTUANTE WHATSAPP -->
-    <a href="https://wa.me/5554997122343" target="_blank" class="fixed bottom-8 right-8 z-[100]">
+    <a href="https://wa.me/5554997122343" target="_blank" class="fixed bottom-8 right-8 z-[50]">
         <div class="bg-[#25D366] text-white p-5 rounded-3xl shadow-2xl shadow-green-900/40 hover:scale-110 transition-transform flex items-center gap-3">
             <i class="fab fa-whatsapp text-2xl"></i>
             <span class="font-black text-[10px] uppercase tracking-tighter">Agendar Agora</span>
